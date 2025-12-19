@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sundarakanda Summary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      /* background image + dark overlay for readability */
+      background:
+        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+        url("final.jpg") center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #fff;
+      text-align: center;
+    }
+
+    /* No box – just a centered container */
+    .card {
+      background: transparent;
+      color: #ffffff;
+      max-width: 900px;
+      width: 100%;
+      padding: 32px 24px;
+    }
+
+    .title {
+      font-family: "Playfair Display", serif;
+      font-size: 2.1rem;
+      margin-bottom: 8px;
+      text-shadow: 0 3px 6px rgba(0,0,0,0.7);
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #f7e2c9;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+    }
+
+    .summary {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      white-space: pre-line;
+      margin-bottom: 22px;
+      text-shadow: 0 3px 6px rgba(0,0,0,0.8); /* improves contrast on image [web:4] */
+    }
+
+    audio {
+      width: 100%;
+      margin-bottom: 26px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.7)); /* keeps controls visible [web:19] */
+    }
+
+    .next-btn {
+      padding: 12px 36px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(244, 123, 59, 0.96);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.6);
+    }
+
+    .next-btn:hover {
+      background: rgba(244, 123, 59, 1);
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 16px;
+      }
+      .card { padding: 24px 12px; }
+      .title { font-size: 1.7rem; }
+      .summary { font-size: 0.98rem; }
+      .next-btn { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1 class="title">Sundarakanda</h1>
+  <p class="subtitle">Summary of the First 10 Ślokas</p>
+
+  <!-- SUMMARY -->
+  <div id="summaryText" class="summary"></div>
+
+  <!-- AUDIO PLAYER -->
+  <audio id="summaryAudio" controls></audio>
+
+  <button class="next-btn" onclick="goFinal()">Continue →</button>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const lang = params.get("lang") || "en";
+
+  const summaries = {
+    sa: `सारांशः:
+सुन्दरकाण्डस्य आरम्भे हनुमान् महाबलवान् कपिवीरः सीतायाः अन्वेषणार्थं लङ्कां प्रति गच्छति।
+सः पर्वतराजस्य महेन्द्रस्य शिखरात् समुद्रं लङ्घयितुं निश्चितमनाः भवति।
+देवाः, गन्धर्वाः, सिद्धाः च हनुमतः अद्भुतं पराक्रमं द्रष्टुं आकाशे स्थिताः भवन्ति।
+हनुमान् आत्मबलं स्मृत्वा, रामकार्यस्य महत्त्वं चिन्तयन्, स्वशक्तिं विवर्धयति।
+सः स्वशरीरं महान्तं कृत्वा, वेगेन आकाशे उत्पतति।
+एवं हनुमान् निर्भयः, दृढनिश्चयः, रामभक्त्या प्रेरितः,
+सीतान्वेषणस्य महान् कार्यारम्भं करोति।`,
+
+    te: `సారాంశం:
+సుందరకాండం ఆరంభంలో హనుమంతుడు సీతాదేవిని వెతకడానికి లంకకు వెళ్లాలని నిర్ణయించుకుంటాడు.
+మహేంద్ర పర్వత శిఖరంపై నిలబడి సముద్రాన్ని దాటే కార్యానికి సిద్ధమవుతాడు.
+శ్రీరాముడి కార్యమే తన ప్రధాన ధ్యేయమని భావించి తన అపార శక్తిని గుర్తు చేసుకుంటాడు.
+ధైర్యం మరియు వేగంతో హనుమంతుడు ఆకాశంలోకి దూకుతాడు.
+ఈ విధంగా రామభక్తితో ప్రేరితుడై
+సీతాన్వేషణ కార్యాన్ని ప్రారంభిస్తాడు.`,
+
+    hi: `सारांश:
+सुंदरकाण्ड के आरंभ में हनुमान जी सीता माता की खोज के लिए लंका जाने का निश्चय करते हैं।
+वे महेन्द्र पर्वत से समुद्र लांघने को तैयार होते हैं।
+रामकार्य का स्मरण कर अपनी अपार शक्ति को पहचानते हैं।
+वेग और साहस के साथ आकाश में उड़ान भरते हैं।
+इस प्रकार रामभक्ति से प्रेरित होकर
+सीता की खोज का शुभारंभ करते हैं।`,
+
+    ka: `ಸಾರಾಂಶ:
+ಸುಂದರಕಾಂಡದ ಆರಂಭದಲ್ಲಿ ಹನುಮಂತನು ಸೀತಾಮಾತೆಯನ್ನು ಹುಡುಕಲು ಲಂಕೆಗೆ ತೆರಳುತ್ತಾನೆ.
+ಮಹೇಂದ್ರ ಪರ್ವತದಿಂದ ಸಮುದ್ರ ದಾಟಲು ಸಿದ್ಧನಾಗುತ್ತಾನೆ.
+ಧೈರ್ಯ ಮತ್ತು ವೇಗದಿಂದ ಆಕಾಶಕ್ಕೆ ಹಾರುತ್ತಾನೆ.
+ಈ ರೀತಿಯಾಗಿ ಸೀತಾನ್ವೇಷಣೆಯ ಕಾರ್ಯಕ್ಕೆ ಶುಭಾರಂಭ ಮಾಡುತ್ತಾನೆ.`,
+
+    ta: `சுருக்கம்:
+சுந்தரகாண்டத்தின் தொடக்கத்தில் ஹனுமான் சீதையை தேடி லங்கைக்கு செல்ல முடிவு செய்கிறார்.
+தைரியமும் வேகமும் கொண்டு ஆகாயத்தில் பறக்கிறார்.
+இவ்வாறு சீதை தேடும் பணியை தொடங்குகிறார்.`,
+
+    en: `Summary:
+At the beginning of the Sundarakanda, Hanuman, the mighty vanara hero, resolves to go to Lanka in search of Sita.
+Standing on the peak of Mount Mahendra, he prepares himself to leap across the vast ocean.
+
+Remembering the importance of Lord Rama’s mission, Hanuman becomes aware of his immense inner strength.
+Expanding his body and filled with courage and speed, Hanuman leaps into the sky.
+Thus, fearless and firmly determined, inspired by devotion to Lord Rama,
+Hanuman begins the great quest of searching for Sita.`
+  };
+
+  const audioFiles = {
+    sa: "audio/sen.mp3",
+    te: "audio/ste.mp3",
+    ta: "audio/sta.mp3",
+    ka: "audio/ska.mp3",
+    hi: "audio/shi.mp3",
+    en: "audio/sen.mp3"
+  };
+
+  document.getElementById("summaryText").textContent =
+    summaries[lang] || summaries.en;
+
+  document.getElementById("summaryAudio").src =
+    audioFiles[lang] || audioFiles.en;
+
+  function goFinal() {
+    window.location.href = `final.html?lang=${lang}`;
+  }
+</script>
+
+</body>
+</html>
